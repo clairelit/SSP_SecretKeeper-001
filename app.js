@@ -34,6 +34,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/public/css", express.static(path.join(__dirname, '/public/css')));
+app.use("/public/fonts", express.static(path.join(__dirname, '/public/fonts')));
+app.use("/public/images", express.static(path.join(__dirname, '/public/images')));
+app.use("/public/javascripts", express.static(path.join(__dirname, '/public/javascripts')));
+app.use("/public/js", express.static(path.join(__dirname, '/public/js')));
+app.use("/public/img", express.static(path.join(__dirname, '/public/img')));
+
 
 //app.use(express.session({ store: new RedisStore }));
 

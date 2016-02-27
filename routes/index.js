@@ -25,7 +25,7 @@ var getSecretIndex = function(secretID){
 
 router.get('/', function(req, res, next){
 
-  if(!req.session){
+  if(req.session.userName === "undefined" || req.session.userName == null){
     res.render('login');
   }
   else{
@@ -130,7 +130,8 @@ router.post('/login', function(req, res, next){
 });
 
 router.get('/logout', function(req, res, next){
-  req.session.destroy();
+  req.session.userNameSession ='';
+  console.log(req.session);
   res.redirect('/');
 });
 
