@@ -3,15 +3,11 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 
-//Found this server on http://expressjs-book.com/index.html%3Fp=128.html
-//var RedisStore = require('connect-redis')(express);
-
 var allSecrets = new Array();
-//var secretCounter = 1;
 var secretCounter = Number();
 
 var getSecretIndex = function(secretID){
-  var secretIndex = -1;
+var secretIndex = -1;
 
   for (var i= 0; i < allSecrets.length; i++){
     console.log("Checking " + allSecrets[i].id + "against" + secretID);
@@ -44,6 +40,8 @@ router.get('/', function(req, res, next){
 
 //Creating a variable to hold a new secret and pushing it into the array.
 router.get('/addNewSecret', function(req, res, next){
+
+  if(req.session.allSecrets === "undefined" || req.session.allSecrets == null){
   //Here I am getting the the array and counter number from local storage so that I can add to them instead of overwriting them.
   //If I was to create a new array instead, like before, I would be creating a new empty array each time I restart the server and add a secret.
   var secretCounterFromStorage = localStorage.getItem('counterValue');
@@ -54,6 +52,7 @@ router.get('/addNewSecret', function(req, res, next){
   secret.id = secretCounterFromStorage++;
   secret.secret = req.query.secretText;
   //allSecrets.push(secret);
+
   arrayFromObject.push(secret);
 //Below I am setting the new versions of the counter and array into local storage after I add each secret.
   localStorage.setItem('allMySecrets', JSON.stringify(arrayFromObject));
@@ -63,7 +62,7 @@ router.get('/addNewSecret', function(req, res, next){
   //console.log(localStorage.getItem('allMySecrets'));
 
   res.redirect('/');
-
+}
 });
 
 router.get('/delete', function (req, res, next){
