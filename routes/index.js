@@ -65,7 +65,7 @@ router.get('/addNewSecret', function(req, res, next){
 }
 });
 
-router.get('/delete', function (req, res, next){
+router.get('/delete:id', function (req, res, next){
   console.log("Deleting secret" + req.query.id);
   var idForDelete = (req.query.id);
   console.log(idForDelete);
