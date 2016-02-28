@@ -128,11 +128,18 @@ router.post('/login', function(req, res, next){
   }
 });
 
-router.get('/logout', function(req, res, next){
+
+// Logout endpoint
+router.get('/logout', function (req, res, next) {
+  req.session.destroy();
+  res.redirect('/');
+});
+
+/*router.get('/logout', function(req, res, next){
   req.session.userNameSession ='';
   console.log(req.session);
   res.redirect('/');
-});
+});*/
 
 
 module.exports = router;
