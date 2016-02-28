@@ -48,7 +48,7 @@ app.use("/public/img", express.static(path.join(__dirname, '/public/img')));
 var expressSessionOptions = {
   secret:'mySecret',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true
 }
 
 

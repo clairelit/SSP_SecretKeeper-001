@@ -25,7 +25,7 @@ router.get('/', function(req, res, next){
     res.render('login');
   }
   else{
-    //console.log(req.session.userName);
+    console.log(req.session.userName);
     var retrieveCounterNumber = localStorage.getItem('counterValue');
     var retrivingData = localStorage.getItem('allMySecrets');
     var retrivedData = JSON.parse(retrivingData);
