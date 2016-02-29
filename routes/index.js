@@ -34,7 +34,7 @@ router.get('/', function(req, res, next){
 //Creating a variable to hold a new secret and pushing it into the array.
 router.get('/addNewSecret', function(req, res, next){
 
-  if(req.session.allSecrets === "undefined" || req.session.allSecrets == null){
+  //if(req.session.allSecrets === "undefined" || req.session.allSecrets == null){
   //Here I am getting the the array and counter number from local storage so that I can add to them instead of overwriting them.
   //If I was to create a new array instead, like before, I would be creating a new empty array each time I restart the server and add a secret.
   var secretCounterFromStorage = localStorage.getItem('counterValue');
@@ -55,7 +55,7 @@ router.get('/addNewSecret', function(req, res, next){
   console.log(localStorage.getItem('allMySecrets'));
 
   res.redirect('/mySecrets');
-}
+//}
 });
 
 router.get('/delete', function (req, res, next){
