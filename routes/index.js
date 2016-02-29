@@ -135,12 +135,12 @@ router.get('/logout', function (req, res, next) {
 
 
 //Ok, this is the code I got from stackoverflow which hopefully will help with azure.
-function sessionCleanup() {
+/*function sessionCleanup() {
     sessionStore.all(function(err, sessions) {
         for (var i = 0; i < sessions.length; i++) {
             sessionStore.get(sessions[i], function() {} );
         }
     });
-}
+}*/
 
 module.exports = router;
