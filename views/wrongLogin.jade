@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  meta(name='viewport', content='width=device-width, initial-scale=1')
+  meta(name='description', content='')
+  meta(name='author', content='')
+  meta(http-equip='cache-control', content='no-store')
+  title User Login
+  link(href='public/css/bootstrap.min.css', rel='stylesheet')
+  link(href='public/css/business-casual.css', rel='stylesheet')
+  link(href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800', rel='stylesheet', type='text/css')
+  link(href='http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic', rel='stylesheet', type='text/css')
+  body
+
+    .brand All My Secrets
+    .container
+        .row
+          .box
+            .col-lg-12
+              hr
+              h2.intro-text.text-center
+                h1 Oops, your login details appear to be incorrect!
+                h2 Please try again
+              hr
+            .col-md-6
+              img.img-responsive.img-border-left(src='img/slide-2.jpg', alt='')
+            .col-md-6
+            form(action='/login', method='post')
+              label(for='login') Username:
+              br
+              input(name='userName')
+              br
+              label(for='password') Password:
+              br
+              input(name='password')
+              br
+              br
+              input(type='submit', value='submit')
+            .clearfix
