@@ -25,14 +25,7 @@ router.get('/', function(req, res, next){
     res.render('login');
   }
   else{
-    console.log(req.session.userName);
-    var retrieveCounterNumber = localStorage.getItem('counterValue');
-    var retrivingData = localStorage.getItem('allMySecrets');
-    var retrivedData = JSON.parse(retrivingData);
-    //console.log(retrivedData[0].id);
-    secretCounter = retrieveCounterNumber;
-    console.log(retrivedData);
-    res.render('mySecrets', {secrets: retrivedData});
+    res.redirect("/mySecrets");
   }
 });
 
@@ -51,7 +44,7 @@ router.get('/addNewSecret', function(req, res, next){
   var secret = {};
   secret.id = secretCounterFromStorage++;
   secret.secret = req.query.secretText;
-  //allSecrets.push(secret);
+  allSecrets.push(secret);
 
   arrayFromObject.push(secret);
 //Below I am setting the new versions of the counter and array into local storage after I add each secret.
@@ -80,7 +73,7 @@ router.get('/delete', function (req, res, next){
 
   console.log(arrayFromObject);
   localStorage.setItem('allMySecrets', JSON.stringify(arrayFromObject));
-  res.redirect('/');
+  res.redirect('/mySecrets');
 });
 
 //This is where the requests are sent by the router.
@@ -89,6 +82,17 @@ router.get('/delete', function (req, res, next){
 /* GET home page. */
 router.get('/login', function(req, res, next){
   res.render('login');
+});
+
+router.get('/mySecrets', function(req, res, next){
+  console.log(req.session.userName);
+  var retrieveCounterNumber = localStorage.getItem('counterValue');
+  var retrivingData = localStorage.getItem('allMySecrets');
+  var retrivedData = JSON.parse(retrivingData);
+  //console.log(retrivedData[0].id);
+  secretCounter = retrieveCounterNumber;
+  console.log(retrivedData);
+  res.render('mySecrets', {secrets: retrivedData});
 });
 
 /*router.get('/hello', function(req, res, next) {
@@ -100,7 +104,8 @@ router.get('/login', function(req, res, next){
 router.post('/login', function(req, res, next){
   var setUserName = 'clairelit';
   var setPassword = 'litclonmel';
-
+  res.redirect('/mySecrets');
+  res.render('mySecrets.jade');
   if(req.body.userName == setUserName && req.body.password == setPassword){
 
 
@@ -114,7 +119,8 @@ router.post('/login', function(req, res, next){
   //Not sure if this will save when app is closed, will test
   req.session.userNameSession = userNameForSession;
 
-//Telling the server which jade page to render to html (in this one its the mySecrets page),
+//Telling the server which jade page to render to html
+//(in this one its the mySecrets page),
 //and send to the browser after the user clicks submit
 
 
