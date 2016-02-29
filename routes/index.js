@@ -95,10 +95,6 @@ router.get('/mySecrets', function(req, res, next){
   res.render('mySecrets', {secrets: retrivedData});
 });
 
-/*router.get('/hello', function(req, res, next) {
-  res.render('hello', { title: 'Hello World' });
-});*/
-
 //Dealing with a parameter from the form on the login page
 //Adding a route/function to handle a post request
 router.post('/login', function(req, res, next){
@@ -118,11 +114,6 @@ router.post('/login', function(req, res, next){
   //userName is a property of the session
   //Not sure if this will save when app is closed, will test
   req.session.userNameSession = userNameForSession;
-
-//Telling the server which jade page to render to html
-//(in this one its the mySecrets page),
-//and send to the browser after the user clicks submit
-
 
 //user will be brought to their secrets page when they click submit
 //Or if their log in details are incorrect, they'll be brought to the wrongLogin page
