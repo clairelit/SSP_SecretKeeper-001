@@ -133,4 +133,12 @@ router.get('/logout', function (req, res, next) {
   res.redirect('/');
 });
 
+function sessionCleanup() {
+    sessionStore.all(function(err, sessions) {
+        for (var i = 0; i < sessions.length; i++) {
+            sessionStore.get(sessions[i], function() {} );
+        }
+    });
+}
+
 module.exports = router;
