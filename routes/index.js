@@ -54,7 +54,7 @@ router.get('/addNewSecret', function(req, res, next){
 
   console.log(localStorage.getItem('allMySecrets'));
 
-  res.redirect('/');
+  res.redirect('/mySecrets');
 //}
 });
 
@@ -67,7 +67,7 @@ router.get('/delete', function (req, res, next){
 
   for (var i= 0; i < arrayFromObject.length; i++){
     if (arrayFromObject[i].id == idForDelete){
-      arrayFromObject.shift(i, 1);
+      arrayFromObject.splice(i, 1);
     }
   }
 
