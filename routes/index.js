@@ -100,11 +100,12 @@ router.get('/mySecrets', function(req, res, next){
 router.post('/login', function(req, res, next){
   var setUserName = 'clairelit';
   var setPassword = 'litclonmel';
-  res.redirect('/mySecrets');
-  res.render('mySecrets.jade');
+  //res.redirect('/mySecrets');
+  //res.render('mySecrets.jade');
   if(req.body.userName == setUserName && req.body.password == setPassword){
 
-
+    res.redirect('/mySecrets');
+    res.render('mySecrets.jade');
   //I've created a variable, which stores the parameter userName, sent from the form,
   //to the query and I'm grabbing it out of the query.
   //userName is a parameter sent from the form with the request to the funciton (on the login.jade page)
@@ -131,12 +132,5 @@ router.get('/logout', function (req, res, next) {
   req.session.destroy();
   res.redirect('/');
 });
-
-/*router.get('/logout', function(req, res, next){
-  req.session.userNameSession ='';
-  console.log(req.session);
-  res.redirect('/');
-});*/
-
 
 module.exports = router;
