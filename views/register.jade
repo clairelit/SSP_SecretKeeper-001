@@ -24,14 +24,15 @@ html
           .col-lg-12
             hr
             h2.intro-text.text-center
-              | Login to view your list of secrets
+              | Register now to start saving your secrets
+            h4
+              |We promise to mind them!!
             hr
           .col-md-6
             img.img-responsive.img-border-left(src='img/slide-2.jpg', alt='')
           .col-md-6
-          a(href='/register') Register
-          form(action='/login', method='post')
-            label(for='login') Username:
+          form(action='/register', method='post')
+            label(for='register') Username:
             br
             input(name='userName')
             br

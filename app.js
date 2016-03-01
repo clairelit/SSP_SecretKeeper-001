@@ -1,27 +1,20 @@
 var express = require('express');
-//SessionStore = require('session-mongoose')(express);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-/*if (typeof localStorage === "undefined" || localStorage === null) {
-  var LocalStorage = require('node-localstorage').LocalStorage;
-  localStorage = new LocalStorage('./scratch');
-}*/
-
-//var RedisStore = require('connect-redis')(express);
-
 //This is telling the app that routes is = the index.js file, which is in the routes folder
 var routes = require('./routes/index');
 
+//"C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --dbpath ./data
 var mongoClient = require('mongodb').MongoClient;
 
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
-var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/test';
+var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
 
 // Let's test to see if we can commect to the DB, if we can we will close it again.
 mongoClient.connect(url, function(err, conn) {
@@ -33,7 +26,6 @@ mongoClient.connect(url, function(err, conn) {
             conn.close();
         }
 });
-
 
 /*
  * Requiring the following package to be able to use sessions.
@@ -60,18 +52,6 @@ app.use("/public/images", express.static(path.join(__dirname, '/public/images'))
 app.use("/public/javascripts", express.static(path.join(__dirname, '/public/javascripts')));
 app.use("/public/js", express.static(path.join(__dirname, '/public/js')));
 app.use("/public/img", express.static(path.join(__dirname, '/public/img')));
-/*app.use(
-  express.session({
-    store: new SessionStore({
-      url :mongodb:'//localhost/session',
-      interval: 1200000
-    })
-    cookie: {maxAge: 1200000},
-    secret: 'my secret'
-  })
-)*/
-
-//app.use(express.session({ store: new RedisStore }));
 
 //Including this to get sessions to work
 var expressSessionOptions = {
