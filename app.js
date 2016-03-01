@@ -1,4 +1,5 @@
 var express = require('express');
+//SessionStore = require('session-mongoose')(express);
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -40,7 +41,16 @@ app.use("/public/images", express.static(path.join(__dirname, '/public/images'))
 app.use("/public/javascripts", express.static(path.join(__dirname, '/public/javascripts')));
 app.use("/public/js", express.static(path.join(__dirname, '/public/js')));
 app.use("/public/img", express.static(path.join(__dirname, '/public/img')));
-
+/*app.use(
+  express.session({
+    store: new SessionStore({
+      url :mongodb:'//localhost/session',
+      interval: 1200000
+    })
+    cookie: {maxAge: 1200000},
+    secret: 'my secret'
+  })
+)*/
 
 //app.use(express.session({ store: new RedisStore }));
 
