@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var mongoClient = require('mongodb').MongoClient;
 var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/test';
 
-<
+
 
 //var allSecrets = new Array();
 //var secretCounter = Number();
@@ -96,7 +96,7 @@ router.get('/login', function(req, res, next){
   res.render('login');
 });
 
-<<<<<<< HEAD
+
 /*router.get('/mySecrets', function(req, res, next){
   console.log(req.session.userName);
 =======
