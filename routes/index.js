@@ -2,14 +2,17 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
+var mongoClient = require('mongodb').MongoClient;
+var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/test';
 
-var allSecrets = new Array();
-var secretCounter = Number();
 
-var getSecretIndex = function(secretID){
-var secretIndex = -1;
+//var allSecrets = new Array();
+//var secretCounter = Number();
 
-  for (var i= 0; i < allSecrets.length; i++){
+//var getSecretIndex = function(secretID){
+//var secretIndex = -1;
+
+/*  for (var i= 0; i < allSecrets.length; i++){
     console.log("Checking " + allSecrets[i].id + "against" + secretID);
     if (allSecrets[i].id == secretId){
       secretIndex = i;
@@ -84,7 +87,7 @@ router.get('/login', function(req, res, next){
   res.render('login');
 });
 
-router.get('/mySecrets', function(req, res, next){
+/*router.get('/mySecrets', function(req, res, next){
   console.log(req.session.userName);
   var retrieveCounterNumber = localStorage.getItem('counterValue');
   var retrivingData = localStorage.getItem('allMySecrets');
@@ -94,7 +97,7 @@ router.get('/mySecrets', function(req, res, next){
   console.log(retrivedData);
   res.render('mySecrets', {secrets: retrivedData});
 });
-
+*/
 //Dealing with a parameter from the form on the login page
 //Adding a route/function to handle a post request
 router.post('/login', function(req, res, next){
