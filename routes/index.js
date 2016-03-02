@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
-var mongoClient = require('mongodb').MongoClient;
+//var mongoClient = require('mongodb').MongoClient;
 
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
-var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
+//var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
 
 
 /*var getSecretIndex = function(secretID){
@@ -22,12 +22,22 @@ var secretIndex = -1;
 
   return secretIndex;
 }*/
+
+router.get('/userList', function(req, res, next){
+  var db=req.db;
+  var collection=db.get('userTable');
+  collection.find({},{},function(e, docs){
+    res.render('userList', {"userList": docs});
+  });
+});
+
+
+
 router.post('/register', function(req, res, next){
   var insertDocument = function(db, callback) {
      db.collection('userTable').insertOne( {
-        "username" : [req.body.userName],
-           "password" : [req.body.password]
-
+        "username" : req.body.userName,
+           "password" : req.body.password
 
      }, function(err, result) {
       assert.equal(err, null);

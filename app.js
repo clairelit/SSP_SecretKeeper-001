@@ -8,24 +8,27 @@ var bodyParser = require('body-parser');
 //This is telling the app that routes is = the index.js file, which is in the routes folder
 var routes = require('./routes/index');
 
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk('localhost:27017/mySecretDatabase');
 //"C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --dbpath ./data
-var mongoClient = require('mongodb').MongoClient;
+//var mongoClient = require('mongodb').MongoClient;
 
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
-var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
+//var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
 
 // Let's test to see if we can commect to the DB, if we can we will close it again.
-mongoClient.connect(url, function(err, conn) {
+/*mongoClient.connect(url, function(err, conn) {
         if(err){
             console.log(err.message);
             throw err;
         } else {
-            console.log("Connected to DB");
+            console.log("Connected to DB ");
             conn.close();
         }
-});
+});*/
 
 /*
  * Requiring the following package to be able to use sessions.
@@ -62,6 +65,11 @@ var expressSessionOptions = {
 
 
 app.use(session(expressSessionOptions));
+
+app.use(function(req, res, next){
+  req.db=db;
+  next();
+});
 
 //Anytime i get any kind of a request, use routes, which is the index.js file
 app.use('/', routes);
