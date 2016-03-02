@@ -2,27 +2,12 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 
-//var mongoClient = require('mongodb').MongoClient;
+var mongoClient = require('mongodb').MongoClient;
 
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
 var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
-
-
-/*var getSecretIndex = function(secretID){
-var secretIndex = -1;
-
-  for (var i= 0; i < allSecrets.length; i++){
-    console.log("Checking " + allSecrets[i].id + "against" + secretID);
-    if (allSecrets[i].id == secretId){
-      secretIndex = i;
-    }
-  }
-
-  return secretIndex;
-}*/
-
 
 
 router.post('/register', function(req, res, next){
