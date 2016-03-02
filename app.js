@@ -8,27 +8,15 @@ var bodyParser = require('body-parser');
 //This is telling the app that routes is = the index.js file, which is in the routes folder
 var routes = require('./routes/index');
 
+
+//Tells our app that we want to talk to MongoDB.
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/mySecretDatabase');
-//"C:\Program Files\MongoDB\Server\3.2\bin\mongod.exe" --dbpath ./data
-//var mongoClient = require('mongodb').MongoClient;
-
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
 var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
-
-// Let's test to see if we can commect to the DB, if we can we will close it again.
-/*mongoClient.connect(url, function(err, conn) {
-        if(err){
-            console.log(err.message);
-            throw err;
-        } else {
-            console.log("Connected to DB ");
-            conn.close();
-        }
-});*/
 
 /*
  * Requiring the following package to be able to use sessions.
@@ -36,6 +24,7 @@ var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecr
  */
 var session = require('express-session');
 
+//Setting up the express app.  This must be put in before all middleware
 var app = express();
 
 // view engine setup
@@ -56,6 +45,7 @@ app.use("/public/javascripts", express.static(path.join(__dirname, '/public/java
 app.use("/public/js", express.static(path.join(__dirname, '/public/js')));
 app.use("/public/img", express.static(path.join(__dirname, '/public/img')));
 
+
 //Including this to get sessions to work
 var expressSessionOptions = {
   secret:'mySecret',
@@ -63,9 +53,10 @@ var expressSessionOptions = {
   saveUninitialized: true
 }
 
-
+//session middleware - has to be used
 app.use(session(expressSessionOptions));
 
+//This makes the database accessible to the router
 app.use(function(req, res, next){
   req.db=db;
   next();
