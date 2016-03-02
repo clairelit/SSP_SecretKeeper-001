@@ -131,20 +131,25 @@ router.get('/userList', function(req, res, next){
 //Dealing with a parameter from the form on the login page
 //Adding a route/function to handle a post request
 router.post('/login', function(req, res, next){
-// var setUserName = 'clairelit';
-  //var setPassword = 'litclonmel';
-  //if(req.body.userName == setUserName && req.body.password == setPassword){
-
-  var userNameForSession = req.body.userName;
-  req.session.userNameSession = userNameForSession;
-  res.redirect('/mySecrets');
-  //res.render('mySecrets', {secrets: allSecrets});
-  //}
-  //else{
-    //res.render('wrongLogin');
-  //}
+  var enteredUserName = req.body.userName;
+  console.log(enteredUserName);
+  console.log(req.body.userName);
+  var enteredPassword = req.body.password;
+  var db = req.db;
+  var collection = db.get('userTable');
+  collection.find({username: enteredUserName},{},function(e, docs){
+    for(var i in docs){
+      if(docs[i].username == enteredUserName){
+        var userName = req.body.userName;
+        req.session.userName = userName;
+        res.redirect('/mySecrets');
+      }
+      else{
+        res.render('wrongLogin');
+      }
+    }
 });
-
+});
 
 // Logout endpoint
 router.get('/logout', function (req, res, next) {
