@@ -138,9 +138,9 @@ router.post('/login', function(req, res, next){
   var db = req.db;
   var collection = db.get('userTable');
   collection.find({username: enteredUserName},{},function(e, docs){
-    /*if(!docs.username){
-      res.render('wrongLogin');
-    }*/
+    //if(!docs.username){
+      //res.render('wrongLogin');
+    //}
     for(var i in docs){
       if(docs[i].password == enteredPassword){
         var userName = req.body.userName;
