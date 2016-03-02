@@ -25,21 +25,21 @@ html
             hr
             h2.intro-text.text-center
               | Register now to start saving your secrets
-            h4
+            h4.text-center
               |We promise to mind them!!
             hr
           .col-md-6
             img.img-responsive.img-border-left(src='img/slide-2.jpg', alt='')
           .col-md-6
-          form(action='/register', method='post')
+          form#formAddUser(action='/register', method='post', name='addUser')
             label(for='register') Username:
             br
-            input(name='userName')
+            input#inputUserName(name='username')
             br
             label(for='password') Password:
             br
-            input(name='password')
+            input#inputUserPassword(name='password')
             br
             br
-            input(type='submit', value='submit')
+            button#btnSubmit(type='submit') Submit
           .clearfix

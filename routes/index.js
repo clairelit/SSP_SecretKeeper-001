@@ -23,31 +23,31 @@ var secretIndex = -1;
   return secretIndex;
 }*/
 
-router.get('/userList', function(req, res, next){
-  var db=req.db;
-  var collection=db.get('userTable');
-  collection.find({},{},function(e, docs){
-    res.render('userList', {"userList": docs});
-  });
-});
-
 
 
 router.post('/register', function(req, res, next){
-  var insertDocument = function(db, callback) {
-     db.collection('userTable').insertOne( {
-        "username" : req.body.userName,
-           "password" : req.body.password
+  var db=req.db;
+  var userName=req.body.username;
+  var userPassword=req.body.password;
 
-     }, function(err, result) {
-      assert.equal(err, null);
-      console.log("Inserted a document into the users collection.");
-      callback();
-    });
-  };
-  req.session.userName = req.body.userName;
-  res.redirect('/');
+  var collection=db.get('userTable');
+
+  collection.insert({
+    "username": userName,
+    "password": userPassword
+}, function(err, doc){
+  if(err){
+    res.send("There was a problem adding information to the Database");
+  }
+  else{
+    var sessionUserName=req.body.username;
+    req.session.userName = sessionUserName;
+    res.redirect('/');
+  }
 });
+});
+
+
 
 router.get('/register', function(req, res, next){
   res.render('register');
@@ -56,7 +56,7 @@ router.get('/register', function(req, res, next){
 
 router.get('/', function(req, res, next){
 
-   if(req.session.userName === "undefined" || req.session.userName == null){
+   if(req.session.username === "undefined" || req.session.username == null){
     res.render('login');
   }
   else{
@@ -67,14 +67,26 @@ router.get('/', function(req, res, next){
 
 
 //Creating a variable to hold a new secret and pushing it into the array.
-router.get('/addNewSecret', function(req, res, next){
-//When I add a new secret, I am taking the info from the query and adding it to an object
-  var secret = {};
-  secret.id = secretCounterFromStorage++;
-  secret.secret = req.query.secretText;
-  res.redirect('/mySecrets');
-//}
+router.post('/addNewSecret', function(req, res, next){
+  var db=req.db;
+  var author=req.session.userName;
+  var secretText=req.body.secretText;
+  var collection=db.get('secretTable');
+
+  collection.insert({
+    "author": author,
+    "secretText": secretText
+  }, function(err, doc){
+  if(err){
+    res.send("There was a problem adding the secret to the Database");
+  }
+  else{
+    res.redirect('/');
+  }
+  });
 });
+
+
 
 router.get('/delete', function (req, res, next){
   console.log("Deleting secret" + req.query.id);
@@ -92,8 +104,26 @@ router.get('/login', function(req, res, next){
 });
 
 router.get('/mySecrets', function(req, res, next){
-  res.render('mySecrets', {secrets: retrivedData});
+  var currentUser=req.session.username;
+  var db=req.db;
+  var collection=db.get('secretTable');
+  collection.find({"author": currentUser},{},function(e, docs){
+  res.render('mySecrets', {secrets: docs});
 });
+});
+
+
+
+
+router.get('/userList', function(req, res, next){
+  var db=req.db;
+  var collection=db.get('userTable');
+  collection.find({},{},function(e, docs){
+    res.render('userList', {"userList": docs});
+  });
+});
+
+
 
 //Dealing with a parameter from the form on the login page
 //Adding a route/function to handle a post request
@@ -104,7 +134,7 @@ router.post('/login', function(req, res, next){
   res.redirect('/mySecrets');
   var userNameForSession = req.body.userName;
   req.session.userNameSession = userNameForSession;
-  res.render('mySecrets', {secrets: allSecrets});
+  //res.render('mySecrets', {secrets: allSecrets});
   //}
   //else{
     //res.render('wrongLogin');
