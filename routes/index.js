@@ -133,11 +133,14 @@ router.get('/userList', function(req, res, next){
 router.post('/login', function(req, res, next){
   var enteredUserName = req.body.userName;
   //console.log(enteredUserName);
-  console.log(req.body.userName);
+  //console.log(req.body.userName);
   var enteredPassword = req.body.password;
   var db = req.db;
   var collection = db.get('userTable');
   collection.find({username: enteredUserName},{},function(e, docs){
+    if(!docs.username){
+      res.render('wrongLogin');
+    }
     for(var i in docs){
       if(docs[i].password == enteredPassword){
         var userName = req.body.userName;
