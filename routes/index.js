@@ -132,14 +132,14 @@ router.get('/userList', function(req, res, next){
 //Adding a route/function to handle a post request
 router.post('/login', function(req, res, next){
   var enteredUserName = req.body.userName;
-  console.log(enteredUserName);
+  //console.log(enteredUserName);
   console.log(req.body.userName);
   var enteredPassword = req.body.password;
   var db = req.db;
   var collection = db.get('userTable');
   collection.find({username: enteredUserName},{},function(e, docs){
     for(var i in docs){
-      if(docs[i].username == enteredUserName){
+      if(docs[i].password == enteredPassword){
         var userName = req.body.userName;
         req.session.userName = userName;
         res.redirect('/mySecrets');
