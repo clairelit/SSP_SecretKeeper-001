@@ -26,9 +26,9 @@ var secretIndex = -1;
 
 
 router.post('/register', function(req, res, next){
-  var db=req.db;
-  var userName=req.body.username;
-  var userPassword=req.body.password;
+  var db = req.db;
+  var userName = req.body.username;
+  var userPassword = req.body.password;
 
   var collection=db.get('userTable');
 
@@ -40,8 +40,9 @@ router.post('/register', function(req, res, next){
     res.send("There was a problem adding information to the Database");
   }
   else{
-    var sessionUserName=req.body.username;
-    req.session.userName = sessionUserName;
+    //var sessionUserName=req.body.username;
+    req.session.userName = userName;
+    console.log(req.session.userName);
     res.redirect('/');
   }
 });
@@ -56,7 +57,7 @@ router.get('/register', function(req, res, next){
 
 router.get('/', function(req, res, next){
 
-   if(req.session.username === "undefined" || req.session.username == null){
+   if(req.session.userName === "undefined" || req.session.userName == null){
     res.render('login');
   }
   else{
@@ -68,10 +69,11 @@ router.get('/', function(req, res, next){
 
 //Creating a variable to hold a new secret and pushing it into the array.
 router.post('/addNewSecret', function(req, res, next){
-  var db=req.db;
-  var author=req.session.userName;
-  var secretText=req.body.secretText;
-  var collection=db.get('secretTable');
+  var db = req.db;
+  console.log(req.session.userName);
+  var author = req.session.userName;
+  var secretText = req.body.secretText;
+  var collection = db.get('secretTable');
 
   collection.insert({
     "author": author,
@@ -103,11 +105,12 @@ router.get('/login', function(req, res, next){
   res.render('login');
 });
 
+
 router.get('/mySecrets', function(req, res, next){
-  var currentUser=req.session.username;
+  var currentUser = req.session.userName;
   var db=req.db;
   var collection=db.get('secretTable');
-  collection.find({"author": currentUser},{},function(e, docs){
+  collection.find({author: currentUser},{},function(e, docs){
   res.render('mySecrets', {secrets: docs});
 });
 });
@@ -131,9 +134,10 @@ router.post('/login', function(req, res, next){
 // var setUserName = 'clairelit';
   //var setPassword = 'litclonmel';
   //if(req.body.userName == setUserName && req.body.password == setPassword){
-  res.redirect('/mySecrets');
+
   var userNameForSession = req.body.userName;
   req.session.userNameSession = userNameForSession;
+  res.redirect('/mySecrets');
   //res.render('mySecrets', {secrets: allSecrets});
   //}
   //else{
