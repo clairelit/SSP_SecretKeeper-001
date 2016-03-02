@@ -106,12 +106,15 @@ router.get('/delete', function (req, res, next){
 router.post('/edit', function(req, res, next){
 	var idForEdit = req.body.id;
 	var newText = req.body.newText;
+  var currentUser = req.session.userName;
   console.log(req.body.newText);
+  console.log(idForEdit);
 	var db = req.db;
 	var collection = db.get('secretTable');
 	collection.update(
     { _id: idForEdit },
-    {"secretText": newText},
+    {"secretText": newText, "author": currentUser},
+
 		{
 			upsert: false,
       multi: false
