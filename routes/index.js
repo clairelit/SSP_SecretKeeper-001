@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
-//var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
+var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
 
 
 /*var getSecretIndex = function(secretID){
@@ -138,9 +138,9 @@ router.post('/login', function(req, res, next){
   var db = req.db;
   var collection = db.get('userTable');
   collection.find({username: enteredUserName},{},function(e, docs){
-    if(!docs.username){
+    /*if(!docs.username){
       res.render('wrongLogin');
-    }
+    }*/
     for(var i in docs){
       if(docs[i].password == enteredPassword){
         var userName = req.body.userName;
