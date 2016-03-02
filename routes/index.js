@@ -79,7 +79,13 @@ router.get('/delete', function (req, res, next){
   console.log("Deleting secret" + req.query.id);
   var idForDelete = (req.query.id);
   console.log(idForDelete);
+  var db=req.db;
+  var collection=db.get('secretTable');
+  collection.remove({_id: idForDelete},{},function(e, docs)
+  {
   res.redirect('/mySecrets');
+});
+
 });
 
 //This is where the requests are sent by the router.
