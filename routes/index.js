@@ -7,7 +7,7 @@ var mongoClient = require('mongodb').MongoClient;
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
-var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
+var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://dbuserclaire:litclonmel@ds064278.mlab.com:64278/MongoLab-f';
 
 //This is a route that accepts details from the form for registering
 router.post('/register', function(req, res, next){
@@ -110,9 +110,11 @@ router.post('/edit', function(req, res, next){
 	var db = req.db;
 	var collection = db.get('secretTable');
 	collection.update(
-	{ _id: idForEdit },
+    { _id: idForEdit },
+    {"secretText": newText},
 		{
-			$set: {"secretText" : newText}
+			upsert: false,
+      multi: false
 		}
 	)
   res.redirect('/');

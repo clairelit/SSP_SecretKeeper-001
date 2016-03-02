@@ -12,11 +12,11 @@ var routes = require('./routes/index');
 //Tells our app that we want to talk to MongoDB.
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/mySecretDatabase');
+var db = monk('mongodb://dbuserclaire:litclonmel@ds064278.mlab.com:64278/MongoLab-f');
 
 // If I am running locally then use 'mongodb://localhost:27017/test' otherwise
 // look for the environment variable
-var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://localhost:27017/mySecretDatabase';
+var url = process.env.CUSTOMCONNSTR_MongoDB || 'mongodb://dbuserclaire:litclonmel@ds064278.mlab.com:64278/MongoLab-f';
 
 /*
  * Requiring the following package to be able to use sessions.
