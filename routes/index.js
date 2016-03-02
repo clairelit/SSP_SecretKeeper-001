@@ -101,6 +101,27 @@ router.get('/delete', function (req, res, next){
 
 });
 
+
+
+router.post('/edit', function(req, res, next){
+	var idForEdit = req.body.id;
+	var newText = req.body.newText;
+  console.log(req.body.newText);
+	var db = req.db;
+	var collection = db.get('secretTable');
+	collection.update(
+	{ _id: idForEdit },
+		{
+			$set: {"secretText" : newText}
+		}
+	)
+  res.redirect('/');
+});
+
+
+
+
+
 //This is where the requests are sent by the router.
 //If the router just receives a get request with /login, use the function below
 //This is the file that handles all of the requests.
